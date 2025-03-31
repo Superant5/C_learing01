@@ -1,0 +1,31 @@
+ÌáÈ¡
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+    string str1("123456789");
+    string str2(str1,3);
+    cout <<str2<<endl;
+    return 0;
+}
+
+
+//Ìæ»»ÊµÑé
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+    string str1="asd";
+    string str2="123asd789asd123asd";
+    string str3;
+    int a=str2.find_last_of(str1);
+    int a=str2.find_first_of(str1);
+    int a=str2.find_last_not_of(str1);
+    int a=str2.find_first_not_of(str1);
+    int a=str2.rfind(str1);
+    int a=str2.find(str1);
+    cout <<a<<endl;
+    return 0;
+}

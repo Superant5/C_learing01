@@ -1,0 +1,84 @@
+//#include <iostream>
+//#include <stack>
+//using namespace std;
+//int main()
+//{
+//    stack<char>a;
+//    for (int i=0;i<26;i++){
+//        a.push(97+i);
+//    }
+//    while (!a.empty()){
+//        char x = a.top();
+//        cout <<x<<endl;
+//        a.pop();
+//    }
+//    return 0;
+//
+//}
+
+
+
+
+//栈的模拟
+#include <iostream>
+using namespace std;
+
+class MyStack {
+private:
+    int data[100]; // 固定大小的栈
+    int topIndex;  // 记录栈顶位置
+
+public:
+    MyStack() { topIndex = -1; } // 构造函数，初始化栈顶指针
+
+    void push(int x) {
+        if (topIndex < 99) { // 防止越界
+            data[++topIndex] = x;
+        } else {
+            cout << "Stack Overflow!\n";
+        }
+    }
+
+    void pop() {
+        if (!empty()) {
+            topIndex--;
+        } else {
+            cout << "Stack is empty!\n";
+        }
+    }
+
+    int top() {
+        if (!empty()) {
+            return data[topIndex];
+        } else {
+            cout << "Stack is empty!\n";
+            return -1; // 返回一个无效值
+        }
+    }
+
+    bool empty() {
+        return topIndex == -1;
+    }
+
+    int size() {
+        return topIndex + 1;
+    }
+};
+
+int main() {
+    MyStack s;
+
+    // 测试 push
+    for (int i = 1; i <= 5; i++) {
+        s.push(i);
+        cout << "Pushed: " << i << ", Stack size: " << s.size() << endl;
+    }
+
+    // 测试 top 和 pop
+    while (!s.empty()) {
+        cout << "Top: " << s.top() << endl;
+        s.pop();
+    }
+
+    return 0;
+}

@@ -1,0 +1,355 @@
+//vector
+//定义数组
+#include <vector>
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    vector <int> a(5,6);
+    a.push_back(7);
+    for (auto x: a){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    return 0;
+}
+
+
+//数组相关函数01
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+    vector <int>a{1,2,3,4,5,6,7,8,9,10};
+    //末尾加
+    a.push_back(11);
+    a.push_back(12);
+    //末尾减
+    a.pop_back();
+    //计数
+    int n=a.size();
+    //删除第三个数据
+    a.erase(a.begin()+2);
+    for(auto x:a){
+    	cout <<x<<" ";
+	}
+    //遍历
+    for(auto x : a ){
+        cout <<x<<" ";   //输出 1-11
+    }
+    cout<<endl;
+    cout <<n<<endl;  //输出 11
+    //修改遍历
+    for (auto &x:a){
+        x*=2;
+        cout<<x<<" ";  //输出（1-11）*2
+    }
+    cout <<endl;
+    vector <int>b=a; //数组复制
+    for (auto x :b){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    a.clear();     //清空数组
+    for (auto x:a){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    return 0;
+}
+
+
+//相关函数02   排序
+#include <vector>
+#include <iostream>
+//引入算法库 ———>sort: 小到大 ； greater 从大到小；
+#include <algorithm>
+using namespace std;
+int main()
+{
+    vector <int>a={9,6,5,8,3,2,1};
+    sort(a.begin(),a.end());
+    for (auto x:a){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    return 0;
+}
+
+二维数组
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n,m;
+    cin >>n>>m;
+    vector <vector <int>>a(n,vector <int>(m));
+//定义二维数组:
+//   定义一个数组，由数组组成；
+//    命名为数组a，有n行;
+//    每行是vector<int>(m)
+    for (int i=0;i<n;i++){
+        for (int j=0;j<m;j++){
+        a[i][j]=i+j;
+        }
+    }
+    for (int i=0;i<n;i++){
+        for (int j=0;j<m;j++){
+            cout <<a[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+
+数组与迭代器
+#include <vector>
+#include <isotream>
+using namespace std;
+int main()
+{
+    vector <int> a={1,2,3,4,5,6,7,8,9};
+//迭代器访问
+
+       //迭代器定义   //    vector<int>::iterator it;
+    auto it +a.begin();
+    for (it =a.begin;it!=a.end;it++){
+        cout <<*it<<" ";
+    }
+    cout <<endl;
+
+    return 0;
+ }
+
+
+
+//迭代器删除数组元素
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+    vector<int>a={1,2,3,4,5,6,15,7,56,8};
+    auto it =a.begin();
+    for(it=a.begin();it!=a.end();it++){
+        if(*it>=10){
+        // 删除 15，并返回下一个有效位置
+        //erase(it); 的返回值是下一个有效位置的迭代器
+       it = a.erase(it);
+        }
+    }
+    for (auto x:a){
+        cout <<x<<" ";
+    }
+    cout<<endl;
+    return 0;
+}
+
+
+
+
+//练习题01
+#include <vector>
+#include <iostream>
+using namespace std;
+struct  student {
+     string name;
+     int score;
+};
+struct teacher {
+     string name;
+     int age;
+     int h;
+};
+
+//用于输出结构体、数组
+ostream& operator<<(ostream& os,const student& s){
+  os<<s.name<<" "<<s.score;
+  return os;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    vector<student>a;
+    for(int i=0;i<n;i++){
+        student stu;
+        cin>>stu.name >>stu.score;
+        a.push_back(stu);
+    }
+
+
+//////////    auto it = a.begin();
+//////////    for (;it!=a.end();it++){
+//////////        if(it->score<60){
+//////////            it = a.erase(it);
+//////////        }
+//////////    }
+
+       auto it =a.begin();
+       while (it!=a.end()){   //避免因删除操作导致的迭代器越界。
+       if(it->score<60){
+        it = a.erase (it);
+       }else {
+            ++it;
+         }
+       }
+
+    for (const auto x:a){
+        cout<<x<<endl;
+    }
+    return 0;
+
+}
+
+
+
+//练习题02
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+    vector<int>a;
+//没有给a分配空间，即没有指定a内部有几个元素；
+////////    for(int i=0;i<11;i++){
+////////        a[i]=i+1;
+////////    }
+
+//正确写法：
+      for(int i=0;i<11;i++){
+        a.push_back(i+1);    //动态扩容，安全；
+      }
+
+
+    a.insert(a.begin()+3,-100);
+    auto it=a.begin();
+    while (it!=a.end()){
+        if(*it<=0){
+            it = a.erase(it);
+        }else {
+        ++it;
+        }
+    }
+    vector<int>b;
+    b.assign(a.begin()+2,a.begin()+5);
+    for (auto x: b){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    return 0;
+}
+
+
+
+//练习题03
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+    int num=0;
+    int n;
+    cin>>n;
+    const int N=1e6+5;
+    vector <int>a(n);
+    //错误写法： vector <int>a;
+    //认为下一行  a.reserve(N);能够分配内存；
+    a.reserve(N);
+    //reserve 只能预留空间，不能实际分配给数组内存
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    auto it =a.begin();
+    while (it!=a.end()){
+    if(*it<0){
+        it=a.erase(it);
+    }else {
+        if(*it>1000){
+            num++;
+        }
+           ++it;
+    }
+    }
+    cout <<num<<endl;
+    return 0;
+
+}
+
+
+
+//练习题04
+#include <vector>
+#include <iostream>
+#include <set>      // 集合
+using namespace std;
+int main()
+{
+    vector <char>a={'a','b','c','d','e','f','g','h'};
+    set<char> yuanyin={'a','e','i','o','u'};
+    auto it =a.begin();
+    while (it !=a.end()){
+        if(yuanyin.count(*it)){
+           //count函数作用：
+           //查找是否存在相同的元素；返回1或0；
+        }
+            it=a.erase(it);////查找是否存在相同的元素
+        }
+        else {
+            ++it;
+        }
+    }
+    a.insert(a.begin()+1,'X');
+    for(auto x:a){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    return 0;
+}
+
+//练习题06
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int n,l,r;
+    cin>>n;
+    vector <int>a(n);
+    for (int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    cin>>l>>r;
+    vector <int>b;
+    b.assign(a.begin()+l,a.begin()+r);
+    reverse(b.begin(),b.end());
+    for (auto x:b){
+        cout <<x<<" ";
+    }
+    cout <<endl;
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
